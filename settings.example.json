@@ -1,5 +1,13 @@
 {
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          { "type": "command", "command": "python ~/.claude/tools/write_guard.py", "timeout": 10 }
+        ]
+      }
+    ],
     "PreCompact": [
       {
         "matcher": "auto|manual",

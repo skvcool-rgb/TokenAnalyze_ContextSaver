@@ -1,7 +1,8 @@
 # TokenAnalyze · ContextSaver
 
-> Two tiny, dependency-light utilities for **long Claude Code sessions**: see exactly where your tokens go — from
-> the *real* API usage, not guesses — and never lose your thread when the context window auto-compacts.
+> A small, dependency-light suite for **long Claude Code sessions**: **measure** exactly where your tokens go (from
+> the *real* API usage, not guesses), **prevent** the two biggest sinks before they happen, and **never lose** your
+> thread when the context window auto-compacts.
 
 `/context` shows a live snapshot. The popular cost trackers show $/day. **Neither tells you the cumulative,
 by-source story of a session** — that (say) *47% went to file-`Write` content*, or your *unscoped rules cost 39K
@@ -46,6 +47,26 @@ $ python token_report.py
 
 Files on disk are never lost on compaction (`Write`/`Edit` persist immediately) — what's lost is the *conversation
 state*. This preserves it.
+
+---
+
+## 3. Prevent — stop the two biggest sinks before they happen
+
+### `scope_rules.py` — cut the per-turn rules tax
+Unscoped rules in `~/.claude/rules/` load on **every** turn (and re-inject after every compaction). Language-specific
+rules (web/python/go/…) only matter when you touch those files. This audits them, shows each one's token cost, and
+(with `--apply`) adds `paths:` frontmatter so they load only when relevant. Cross-cutting dirs (common/, unused
+translations) are flagged for you to review/delete.
+```bash
+python scope_rules.py            # dry-run: unscoped rules + token cost + suggested scopes
+python scope_rules.py --apply    # scope the language-dir rules (web/python/…)
+```
+
+### `write_guard.py` — nudge `Edit` over wasteful full-`Write`
+A `PreToolUse(Write)` hook. When a `Write` rewrites a large existing file that's **mostly unchanged**, the whole
+content is re-sent as tokens (the #1 session cost) — an `Edit` sends only the diff. It emits a non-blocking nudge by
+default, or **blocks** (forcing an Edit) with `WRITE_GUARD_STRICT=1`. New files and genuine rewrites pass through
+untouched. Enable via the `PreToolUse` block in [`settings.example.json`](settings.example.json).
 
 ---
 

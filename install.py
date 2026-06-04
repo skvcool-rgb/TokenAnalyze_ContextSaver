@@ -8,7 +8,8 @@ DEST = os.path.join(os.path.expanduser("~"), ".claude", "tools")
 
 def main():
     os.makedirs(DEST, exist_ok=True)
-    files = ["token_report.py", "checkpoint.py", "resume.py", os.path.join("docs", "TOKEN_EFFICIENCY.md")]
+    files = ["token_report.py", "checkpoint.py", "resume.py", "scope_rules.py", "write_guard.py",
+             os.path.join("docs", "TOKEN_EFFICIENCY.md")]
     for rel in files:
         src = os.path.join(HERE, rel)
         if os.path.exists(src):
