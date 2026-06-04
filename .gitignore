@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+*.pyo
+.claude/CHECKPOINT.md
+.DS_Store

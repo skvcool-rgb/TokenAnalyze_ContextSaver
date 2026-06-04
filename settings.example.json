@@ -1,0 +1,20 @@
+{
+  "hooks": {
+    "PreCompact": [
+      {
+        "matcher": "auto|manual",
+        "hooks": [
+          { "type": "command", "command": "python ~/.claude/tools/checkpoint.py", "timeout": 40 }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          { "type": "command", "command": "python ~/.claude/tools/resume.py", "timeout": 15 }
+        ]
+      }
+    ]
+  }
+}
