@@ -30,11 +30,19 @@ def main():
     try: old = open(path, encoding="utf-8", errors="ignore").read()
     except Exception: sys.exit(0)
     if old.count("\n") + 1 < OLD_MIN_LINES: sys.exit(0)         # small file -> cheap, don't nag
-    ratio = difflib.SequenceMatcher(None, old, new).ratio()
+    # autojunk=False: the default heuristic treats frequent chars as "junk" on >200-char strings, which
+    # collapses the similarity ratio for repetitive/code files (a 1-line change scored 0.38) — false-negativing
+    # exactly the wasteful rewrites we want to catch. Disable it so the ratio is accurate.
+    ratio = difflib.SequenceMatcher(None, old, new, autojunk=False).ratio()
     if ratio < SIMILAR: sys.exit(0)                             # genuine rewrite -> allow silently
     msg = (f"efficiency: Write rewrites {os.path.basename(path)} "
            f"({old.count(chr(10))+1} lines, ~{int(ratio*100)}% unchanged) — a full Write re-sends ~{est(new)} "
            f"tokens; Edit sends only the changed lines. Prefer Edit for small changes.")
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import _signals; _signals.emit("write_guard", f"{os.path.basename(path)} ~{int(ratio*100)}% unchanged")
+    except Exception:
+        pass
     if os.environ.get("WRITE_GUARD_STRICT") == "1":
         print(msg, file=sys.stderr); sys.exit(2)               # block -> forces an Edit
     print(json.dumps({"hookSpecificOutput": {"hookEventName": "PreToolUse",

@@ -1,0 +1,66 @@
+{
+  "name": "kos-memory",
+  "version": "6.0.2",
+  "description": "Local-first memory + reality-sync for Claude Code. Auto-injects MEMORY.md, git state, and session history. Multi-machine sync, marker-fenced MEMORY.md auto-curation, opt-in test runner, cross-tool surfaces. Pure-stdlib, zero dependencies.",
+  "author": {
+    "name": "skvcool-rgb",
+    "url": "https://github.com/skvcool-rgb"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/skvcool-rgb/KOS-MemoryV4",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:/Python314/python.exe ${CLAUDE_PLUGIN_ROOT}/hooks/SessionStart.py",
+            "timeout": 3
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:/Python314/python.exe ${CLAUDE_PLUGIN_ROOT}/hooks/Stop.py",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "auto",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:/Python314/python.exe ${CLAUDE_PLUGIN_ROOT}/hooks/PreCompact.py",
+            "timeout": 8
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:/Python314/python.exe ${CLAUDE_PLUGIN_ROOT}/hooks/UserPromptSubmit.py",
+            "timeout": 2
+          }
+        ]
+      }
+    ]
+  },
+  "mcpServers": {
+    "kos-memory": {
+      "command": "C:/Python314/python.exe",
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/mcp/server.py"
+      ]
+    }
+  }
+}

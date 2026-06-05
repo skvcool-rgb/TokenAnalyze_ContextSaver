@@ -3,3 +3,9 @@ __pycache__/
 *.pyo
 .claude/CHECKPOINT.md
 .DS_Store
+
+# runtime artifacts (created in the install dir at runtime, not committed)
+.signals.jsonl
+.metrics_cache.json
+*.tmp
+.kos-memory/

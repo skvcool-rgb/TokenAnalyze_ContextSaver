@@ -42,6 +42,11 @@ def main():
         f.write("### uncommitted / in-flight at checkpoint\n```\n" + (status or "(working tree clean)") + "\n```\n")
         f.write("\n_Resume tip: read this + the project CLAUDE.md resume pointer to continue. "
                 "Run `python ~/.claude/tools/token_report.py` to see where tokens went._\n")
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import _signals; _signals.emit("checkpoint", f"saved · {payload.get('trigger', '?')}")
+    except Exception:
+        pass
     print(f"[checkpoint] {ts} -> {out}" + (f" + commit {commit}" if commit else ""))
     sys.exit(0)
 

@@ -1,0 +1,35 @@
+{
+  "name": "kos-memory",
+  "owner": {
+    "name": "skvcool-rgb",
+    "url": "https://github.com/skvcool-rgb"
+  },
+  "metadata": {
+    "description": "Local-first memory + reality-sync for Claude Code. Auto-injects MEMORY.md, git state, and session history at session start. Multi-machine sync, marker-fenced MEMORY.md auto-curation, opt-in test runner, cross-tool surfaces. Pure-stdlib, zero dependencies."
+  },
+  "plugins": [
+    {
+      "name": "kos-memory",
+      "source": "./",
+      "description": "Per-project memory + reality-sync for Claude Code. Reduces 'X is not built' false-negatives by auto-injecting filesystem + git state alongside chunked session history.",
+      "version": "6.0.2",
+      "author": {
+        "name": "skvcool-rgb"
+      },
+      "homepage": "https://github.com/skvcool-rgb/KOS-MemoryV4",
+      "repository": "https://github.com/skvcool-rgb/KOS-MemoryV4",
+      "license": "MIT",
+      "keywords": [
+        "memory",
+        "context-management",
+        "local-first",
+        "mcp",
+        "hooks",
+        "reality-sync",
+        "memory-md",
+        "primary-memory",
+        "developer-tools"
+      ]
+    }
+  ]
+}
