@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install the TokenAnalyze · ContextSaver · KASM suite into ~/.claude/tools/ and print the config to add.
+"""Install Pulse (live panel + statusline + token analytics + context-saver + KASM memory) into ~/.claude/tools/.
 Cross-platform; copies scripts only — does NOT modify settings.json (you merge the printed blocks yourself).
 KASM (kasm/) has its OWN installer; this points you to it rather than touching its settings block."""
 import os, shutil, sys

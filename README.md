@@ -1,8 +1,11 @@
-# TokenAnalyze · ContextSaver · KASM
+# Pulse
 
-> A dependency-light suite for **long Claude Code sessions**: **see** what's going on (live), **measure** exactly
-> where your tokens go (from the *real* API usage, not guesses), **prevent** the two biggest sinks before they
-> happen, **never lose** your thread when context auto-compacts, and keep a per-project **memory**.
+> **Live vitals, efficiency, and memory for long Claude Code sessions.** **See** what's going on (live),
+> **measure** exactly where your tokens go (from the *real* API usage, not guesses), **prevent** the two biggest
+> sinks before they happen, **never lose** your thread when context auto-compacts, and keep a per-project
+> **memory**. Pulse bundles a live **watch panel + statusline**, an exact **token-utilization analyzer**,
+> **auto-checkpoint** across compaction, **waste-prevention hooks**, and **KASM** per-project memory — pure
+> stdlib, MIT, nothing phones home.
 
 `/context` is a one-shot snapshot. Cost trackers show $/day. Neither tells you the cumulative, **by-source**
 story of a session — and the tools that *act* for you (checkpoint, write-guard, memory recall) run as **hooks**,
